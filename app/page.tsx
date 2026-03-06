@@ -26,6 +26,9 @@ export default function Home() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [showTerms, setShowTerms] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
+  const [showRefund, setShowRefund] = useState(false)
+  const [showCookie, setShowCookie] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDownloadOpen, setIsDownloadOpen] = useState(false)
@@ -333,7 +336,7 @@ export default function Home() {
             <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
               <div>
                 <h3 className="text-2xl font-bold text-slate-900">Terms & Conditions</h3>
-                <p className="text-slate-500 text-sm mt-1">Last updated: March 2024</p>
+                <p className="text-slate-500 text-sm mt-1">Last updated: March 2024 | DineByte India</p>
               </div>
               <button 
                 onClick={onClose} 
@@ -345,39 +348,47 @@ export default function Home() {
             </div>
             <div className="p-8 sm:p-10 overflow-y-auto custom-scrollbar">
               <div className="prose prose-slate max-w-none">
-                <p className="text-lg text-slate-600 leading-relaxed">Welcome to DineByte. By using our services, you agree to the following terms and conditions designed to ensure a fair and transparent experience for all our restaurant partners.</p>
+                <p className="text-lg text-slate-600 leading-relaxed">Welcome to DineByte. These terms and conditions outline the rules and regulations for the use of DineByte's Restaurant Management Platform, operated under Indian jurisdiction.</p>
                 
                 <div className="mt-10 space-y-10">
                   <section>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">1</div>
-                      <h4 className="text-xl font-bold text-slate-900 m-0">Service Model</h4>
+                      <h4 className="text-xl font-bold text-slate-900 m-0">Acceptance of Terms</h4>
                     </div>
-                    <p className="text-slate-600 leading-relaxed">DineByte provides restaurant management solutions on a <strong>subscription basis</strong>. Users can choose from various plans tailored to their business needs. Subscriptions are billed monthly or annually in advance.</p>
+                    <p className="text-slate-600 leading-relaxed">By accessing this platform, you agree to comply with and be bound by these terms. Our services are intended for use by business entities (restaurants/cafes) registered in India.</p>
                   </section>
 
                   <section>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">2</div>
-                      <h4 className="text-xl font-bold text-slate-900 m-0">Free Demo</h4>
+                      <h4 className="text-xl font-bold text-slate-900 m-0">Subscription & Billing</h4>
                     </div>
-                    <p className="text-slate-600 leading-relaxed">All product demonstrations are provided <strong>100% free of cost</strong>. This is to help you fully understand our platform's capabilities before making any financial commitment.</p>
+                    <p className="text-slate-600 leading-relaxed">DineByte operates on a SaaS model. All prices are inclusive of applicable <strong>GST (Goods and Services Tax)</strong>. Subscriptions are billed in advance on a monthly or annual basis as per the selected plan.</p>
                   </section>
 
                   <section>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">3</div>
-                      <h4 className="text-xl font-bold text-slate-900 m-0">Usage Policy</h4>
+                      <h4 className="text-xl font-bold text-slate-900 m-0">Software Usage</h4>
                     </div>
-                    <p className="text-slate-600 leading-relaxed">Users are responsible for maintaining the confidentiality of their account credentials. DineByte is not liable for any loss resulting from unauthorized access due to user negligence.</p>
+                    <p className="text-slate-600 leading-relaxed">You are granted a non-exclusive, non-transferable license to use DineByte for your internal business operations. Reverse engineering or unauthorized distribution of the software is strictly prohibited under the <strong>Indian Copyright Act</strong>.</p>
                   </section>
 
                   <section>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">4</div>
-                      <h4 className="text-xl font-bold text-slate-900 m-0">Data Privacy</h4>
+                      <h4 className="text-xl font-bold text-slate-900 m-0">User Responsibilities</h4>
                     </div>
-                    <p className="text-slate-600 leading-relaxed">We value your data. All restaurant and customer data processed through DineByte is encrypted and handled according to our Privacy Policy. We do not sell your data to third parties.</p>
+                    <p className="text-slate-600 leading-relaxed">Users must ensure the accuracy of data entered into the system. DineByte is not responsible for incorrect billing or tax calculations resulting from erroneous user input.</p>
+                  </section>
+
+                  <section>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">5</div>
+                      <h4 className="text-xl font-bold text-slate-900 m-0">Governing Law</h4>
+                    </div>
+                    <p className="text-slate-600 leading-relaxed">These terms are governed by the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the courts in <strong>Patna, Bihar</strong>.</p>
                   </section>
                 </div>
               </div>
@@ -396,36 +407,408 @@ export default function Home() {
     </AnimatePresence>
   )
 
-  const Mockup = ({ src, delay = 0 }: { src: string, delay?: number }) => (
+  const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100 max-h-[85vh] flex flex-col"
+          >
+            <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">Privacy Policy</h3>
+                <p className="text-slate-500 text-sm mt-1">Compliant with Digital Personal Data Protection Act, 2023</p>
+              </div>
+              <button 
+                onClick={onClose} 
+                className="p-2.5 hover:bg-slate-200/50 rounded-2xl transition-colors group" 
+                aria-label="Close"
+              >
+                <X className="w-6 h-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </button>
+            </div>
+            <div className="p-8 sm:p-10 overflow-y-auto custom-scrollbar">
+              <div className="prose prose-slate max-w-none">
+                <p className="text-lg text-slate-600 leading-relaxed">DineByte is committed to protecting your business and customer data. This policy explains how we collect, use, and safeguard your information.</p>
+                
+                <div className="mt-10 space-y-10">
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Data Collection</h4>
+                    <p className="text-slate-600 leading-relaxed">We collect restaurant information (name, address, GSTIN), owner contact details, and customer transaction data solely for providing our management services.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Data Usage</h4>
+                    <p className="text-slate-600 leading-relaxed">Your data is used to generate bills, provide analytics, and manage orders. We <strong>do not sell</strong> your data or your customers' data to third-party marketing agencies.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Data Security</h4>
+                    <p className="text-slate-600 leading-relaxed">All data is stored on secure cloud servers with end-to-end encryption. We follow industry-standard security protocols to prevent unauthorized access.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Compliance</h4>
+                    <p className="text-slate-600 leading-relaxed">We comply with the <strong>Information Technology Act, 2000</strong> and the <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong> of India.</p>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+              <button 
+                onClick={onClose}
+                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  )
+
+  const RefundModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100 max-h-[85vh] flex flex-col"
+          >
+            <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">Cancellation & Refund</h3>
+                <p className="text-slate-500 text-sm mt-1">Fair usage policy for our partners</p>
+              </div>
+              <button 
+                onClick={onClose} 
+                className="p-2.5 hover:bg-slate-200/50 rounded-2xl transition-colors group" 
+                aria-label="Close"
+              >
+                <X className="w-6 h-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </button>
+            </div>
+            <div className="p-8 sm:p-10 overflow-y-auto custom-scrollbar">
+              <div className="prose prose-slate max-w-none">
+                <p className="text-lg text-slate-600 leading-relaxed">At DineByte, we believe in providing value. Our refund policy is designed to be fair and transparent.</p>
+                
+                <div className="mt-10 space-y-10">
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Subscription Cancellation</h4>
+                    <p className="text-slate-600 leading-relaxed">You can cancel your subscription at any time through your dashboard. Your service will continue until the end of the current billing cycle.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Refund Eligibility</h4>
+                    <p className="text-slate-600 leading-relaxed">Refunds are provided if requested within <strong>7 days of the initial purchase</strong>, provided the service has not been extensively used. Renewal payments are generally non-refundable.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Hardware Refunds</h4>
+                    <p className="text-slate-600 leading-relaxed">For smart hardware purchases, a full refund is available within 15 days for defective units. The hardware must be returned in its original packaging.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Processing Time</h4>
+                    <p className="text-slate-600 leading-relaxed">Once approved, refunds are processed within <strong>5-7 working days</strong> to the original payment method used.</p>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+              <button 
+                onClick={onClose}
+                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  )
+
+  const CookieModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100 max-h-[85vh] flex flex-col"
+          >
+            <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">Cookie Policy</h3>
+                <p className="text-slate-500 text-sm mt-1">How we use cookies to improve your experience</p>
+              </div>
+              <button 
+                onClick={onClose} 
+                className="p-2.5 hover:bg-slate-200/50 rounded-2xl transition-colors group" 
+                aria-label="Close"
+              >
+                <X className="w-6 h-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+              </button>
+            </div>
+            <div className="p-8 sm:p-10 overflow-y-auto custom-scrollbar">
+              <div className="prose prose-slate max-w-none">
+                <p className="text-lg text-slate-600 leading-relaxed">DineByte uses cookies to ensure the platform functions correctly and to provide a personalized experience for your staff and customers.</p>
+                
+                <div className="mt-10 space-y-10">
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Essential Cookies</h4>
+                    <p className="text-slate-600 leading-relaxed">These are required for core features like session management, secure login, and basket persistence during QR ordering.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Analytics Cookies</h4>
+                    <p className="text-slate-600 leading-relaxed">We use these to understand how users interact with our dashboard, helping us optimize performance and usability.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Preference Cookies</h4>
+                    <p className="text-slate-600 leading-relaxed">These remember your settings such as language preferences and dashboard layout customizations.</p>
+                  </section>
+
+                  <section>
+                    <h4 className="text-xl font-bold text-slate-900 mb-4">Third-Party Cookies</h4>
+                    <p className="text-slate-600 leading-relaxed">Our payment gateways (like Razorpay) may use cookies to ensure secure transaction processing.</p>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+              <button 
+                onClick={onClose}
+                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  )
+
+  const Mockup = ({ src, delay = 0, className = "" }: { src: string, delay?: number, className?: string }) => (
     <motion.div 
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 40, rotateX: 5 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8, delay, ease: [0.21, 0.45, 0.32, 0.9] }}
-      className="relative w-full group perspective-1000"
+      transition={{ duration: 1, delay, ease: [0.21, 0.45, 0.32, 0.9] }}
+      className={`relative w-full group perspective-2000 ${className}`}
     >
-      <div className="absolute -inset-4 bg-linear-to-tr from-amber-500/20 to-blue-500/20 rounded-[2.5rem] blur-3xl opacity-0 group-hover:opacity-100 transition duration-1000" />
+      <div className="absolute -inset-10 bg-linear-to-tr from-amber-500/20 via-transparent to-blue-500/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition duration-1000" />
+      
       <motion.div 
-        whileHover={{ rotateX: 2, rotateY: -2, scale: 1.02 }}
-        className="relative rounded-4xl bg-white p-2 shadow-2xl border border-slate-100 overflow-hidden transform-gpu transition-all duration-500"
+        whileHover={{ 
+          rotateX: 5, 
+          rotateY: -5, 
+          scale: 1.05,
+          z: 50
+        }}
+        className="relative rounded-[2.5rem] bg-white/90 backdrop-blur-md p-3 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50 overflow-hidden transform-gpu transition-all duration-700 ease-out"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-slate-50 to-white" />
-        <div className="relative rounded-3xl overflow-hidden border border-slate-100">
+        {/* Browser Frame Header */}
+        <div className="absolute top-0 left-0 right-0 h-10 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/50 flex items-center px-6 gap-2 z-20">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-400/50" />
+            <div className="w-2.5 h-2.5 rounded-full bg-amber-400/50" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-400/50" />
+          </div>
+          <div className="mx-auto flex items-center gap-2 bg-slate-200/30 px-4 py-1 rounded-lg">
+             <Lock className="w-2.5 h-2.5 text-slate-400" />
+             <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">dinebyte.in</div>
+          </div>
+        </div>
+
+        <div className="relative mt-10 rounded-2xl overflow-hidden border border-slate-200/50 shadow-inner bg-slate-100">
           <img
             src={src}
-            className="w-full h-auto object-cover transform transition duration-700"
+            className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-105"
             alt="mockup"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-linear-to-t from-slate-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         </div>
       </motion.div>
     </motion.div>
   )
 
+  const ExperienceShowcase = () => {
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const mockups = [
+      {
+        src: "/ai mockup.jpg",
+        title: "Gemini AI Dashboard",
+        desc: "Advanced neural networks analyzing your restaurant data in real-time.",
+        badge: "AI ENGINE",
+        icon: LineChart
+      },
+      {
+        src: "/bill mockup.jpg",
+        title: "Billing Configuration",
+        desc: "Professional GST-ready billing with deep revenue insights and customization.",
+        badge: "SMART BILLING",
+        icon: Receipt
+      },
+      {
+        src: "/order mockup.jpg",
+        title: "Premium Ordering",
+        desc: "Seamless ordering experience designed for high-pressure environments.",
+        badge: "SECURE ORDERING",
+        icon: QrCode
+      }
+    ]
+
+    const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % mockups.length)
+    const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + mockups.length) % mockups.length)
+
+    return (
+      <section className="py-32 px-6 bg-[#fafbfc] overflow-hidden relative">
+        {/* Ambient backgrounds */}
+        <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-sm font-bold text-amber-600 uppercase tracking-[0.3em] mb-4"
+            >
+              Visual Intelligence
+            </motion.h2>
+            <motion.h3 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900"
+            >
+              Advanced <span className="text-amber-600">Restaurant</span> Ecosystem
+            </motion.h3>
+          </div>
+
+          <div className="relative max-w-5xl mx-auto">
+            <div className="relative h-[500px] md:h-[700px] flex items-center justify-center perspective-3000">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, x: 100, rotateY: -20, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -100, rotateY: 20, scale: 0.9 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute w-full h-full flex items-center justify-center transform-gpu"
+                >
+                  <div className="relative w-full group">
+                    <Mockup src={mockups[currentIndex].src} className="shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]" />
+                    
+                    {/* Floating Info Card */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-white/90 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-2xl z-30 flex flex-col md:flex-row items-center gap-6"
+                    >
+                      <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30">
+                        {(() => {
+                          const Icon = mockups[currentIndex].icon;
+                          return <Icon className="w-8 h-8" />;
+                        })()}
+                      </div>
+                      <div className="text-center md:text-left">
+                        <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
+                          <h4 className="text-xl font-bold text-slate-900">{mockups[currentIndex].title}</h4>
+                          <span className="px-3 py-1 bg-amber-100 text-amber-600 text-[10px] font-black rounded-full uppercase tracking-widest">
+                            {mockups[currentIndex].badge}
+                          </span>
+                        </div>
+                        <p className="text-slate-500 text-sm max-w-sm">{mockups[currentIndex].desc}</p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-20 z-40">
+              <button
+                onClick={prevSlide}
+                aria-label="Previous Slide"
+                className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center shadow-xl border border-slate-100 hover:bg-amber-600 hover:text-white transition-all hover:scale-110 active:scale-90 group"
+              >
+                <ChevronRight className="w-6 h-6 md:w-8 md:h-8 rotate-180 group-hover:-translate-x-1 transition-transform" />
+              </button>
+            </div>
+            <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-20 z-40">
+              <button
+                onClick={nextSlide}
+                aria-label="Next Slide"
+                className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center shadow-xl border border-slate-100 hover:bg-amber-600 hover:text-white transition-all hover:scale-110 active:scale-90 group"
+              >
+                <ChevronRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+
+            {/* Slide Indicators */}
+            <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex gap-3 z-40">
+              {mockups.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-500 ${
+                    currentIndex === i ? "w-12 bg-amber-600" : "w-2 bg-slate-300 hover:bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#fafbfc] text-slate-900 selection:bg-amber-100 selection:text-amber-900">
       <Modal isOpen={open} onClose={() => setOpen(false)} />
       <TermsModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
+      <PrivacyModal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)} />
+      <RefundModal isOpen={showRefund} onClose={() => setShowRefund(false)} />
+      <CookieModal isOpen={showCookie} onClose={() => setShowCookie(false)} />
       <DownloadModal isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} />
 
       {/* NAVBAR */}
@@ -586,7 +969,7 @@ export default function Home() {
           </motion.div>
 
           <div className="mt-24 max-w-5xl mx-auto">
-            <Mockup src="/dashboard.png" delay={0.2} />
+            <Mockup src="/dashboardnew.jpg" delay={0.2} />
           </div>
         </div>
       </section>
@@ -653,6 +1036,8 @@ export default function Home() {
         </div>
       </section>
 
+      <ExperienceShowcase />
+
 
       {/* FEATURES */}
       <section id="features" className="py-32 px-6 max-w-7xl mx-auto relative">
@@ -676,7 +1061,7 @@ export default function Home() {
                   icon: LayoutDashboard, 
                   title: "Smart Table Management", 
                   desc: "Visualize your entire floor in real-time. Track order status, occupancy, and turnover at a glance.",
-                  img: "/table.png"
+                  img: "/order mockup.jpg"
                 },
                 { 
                   icon: QrCode, 
@@ -688,7 +1073,7 @@ export default function Home() {
                   icon: Receipt, 
                   title: "Billing & Analytics", 
                   desc: "Advanced GST-ready billing with deep revenue insights. Understand your best sellers and peak hours instantly.",
-                  img: "/billing.png"
+                  img: "/bill mockup.jpg"
                 },
               ].map((item, index) => (
                 <motion.div 
@@ -714,7 +1099,7 @@ export default function Home() {
           <div className="relative">
             <div className="absolute -inset-10 bg-amber-500/10 rounded-full blur-[120px] opacity-50" />
             <div className="relative z-10 scale-110">
-              <Mockup src="/table.png" />
+              <Mockup src="/tablenew.jpg" />
             </div>
             {/* Floating UI Elements */}
             <motion.div 
@@ -757,7 +1142,7 @@ export default function Home() {
                 title: "Cloud POS Software",
                 desc: "Lightning fast interface that works on any device. 99.9% uptime guaranteed.",
                 features: ["Offline Mode", "Multi-terminal Sync", "Staff Permissions"],
-                img: "/dashboard.png"
+                img: "/dashboardnew.jpg"
               },
               {
                 id: "qr",
@@ -894,7 +1279,7 @@ export default function Home() {
                       <div className="mx-auto text-[10px] text-slate-400 font-bold uppercase tracking-widest">DineByte Desktop</div>
                     </div>
                     <img 
-                      src="/dashboard.png" 
+                      src="/dashboardnew.jpg" 
                       alt="DineByte Desktop App" 
                       className="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity"
                     />
@@ -960,7 +1345,7 @@ export default function Home() {
             </div>
 
             <div className="hidden lg:block">
-              <Mockup src="/billing.png" />
+              <Mockup src="/bill mockup.jpg" />
             </div>
           </div>
         </div>
@@ -1097,9 +1482,9 @@ export default function Home() {
               <h4 className="font-bold text-slate-900 mb-8 uppercase tracking-widest text-xs">Legal</h4>
               <ul className="space-y-4 text-slate-500 font-bold">
                 <li><button onClick={() => setShowTerms(true)} className="hover:text-amber-600 transition-colors">Terms & Conditions</button></li>
-                <li><a href="#" className="hover:text-amber-600 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-amber-600 transition-colors">Refund Policy</a></li>
-                <li><a href="#" className="hover:text-amber-600 transition-colors">Cookie Policy</a></li>
+                <li><button onClick={() => setShowPrivacy(true)} className="hover:text-amber-600 transition-colors">Privacy Policy</button></li>
+                <li><button onClick={() => setShowRefund(true)} className="hover:text-amber-600 transition-colors">Refund Policy</button></li>
+                <li><button onClick={() => setShowCookie(true)} className="hover:text-amber-600 transition-colors">Cookie Policy</button></li>
               </ul>
             </div>
           </div>
