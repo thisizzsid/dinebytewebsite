@@ -16,7 +16,10 @@ import {
   X,
   Mail,
   MessageCircle,
-  MapPin
+  MapPin,
+  Download,
+  Lock,
+  Loader2
 } from "lucide-react"
 
 export default function Home() {
@@ -25,6 +28,10 @@ export default function Home() {
   const [showTerms, setShowTerms] = useState(false)
   const [activeTab, setActiveTab] = useState("dashboard")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false)
+  const [downloadPassword, setDownloadPassword] = useState("")
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [downloadError, setDownloadError] = useState("")
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -49,6 +56,142 @@ export default function Home() {
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const DownloadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+    const handleDownload = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsDownloading(true);
+      setDownloadError("");
+
+      try {
+        const response = await fetch('/api/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            password: downloadPassword,
+            filename: 'software-v1.zip' // This can be dynamic in future
+          }),
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'DineByte_Software_v1.zip';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+          onClose();
+          setDownloadPassword("");
+        } else {
+          const data = await response.json();
+          setDownloadError(data.error || "Incorrect password. Please try again.");
+        }
+      } catch (err) {
+        setDownloadError("Failed to initiate download. Please check your connection.");
+      } finally {
+        setIsDownloading(false);
+      }
+    };
+
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100"
+            >
+              <div className="p-8 sm:p-10">
+                <div className="flex justify-between items-start mb-8">
+                  <div>
+                    <h3 className="text-3xl font-bold text-slate-900 tracking-tight">Secure Download</h3>
+                    <p className="text-slate-500 text-sm mt-2">Enter password to download software</p>
+                  </div>
+                  <button 
+                    onClick={onClose} 
+                    className="p-2.5 hover:bg-slate-100 rounded-2xl transition-colors group" 
+                    aria-label="Close"
+                    disabled={isDownloading}
+                  >
+                    <X className="w-6 h-6 text-slate-400 group-hover:text-slate-900 transition-colors" />
+                  </button>
+                </div>
+                
+                <form className="space-y-6" onSubmit={handleDownload}>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700 ml-1 flex items-center gap-2">
+                      <Lock className="w-4 h-4 text-amber-600" />
+                      Software Password
+                    </label>
+                    <input 
+                      type="password" 
+                      required 
+                      value={downloadPassword}
+                      onChange={(e) => setDownloadPassword(e.target.value)}
+                      className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all" 
+                      placeholder="••••••••••••" 
+                    />
+                    <p className="text-[10px] text-slate-400 mt-1 ml-1 uppercase tracking-wider font-bold">
+                      Password hint: Dinebytesoftware.in
+                    </p>
+                  </div>
+
+                  {downloadError && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-sm font-bold bg-red-50 p-3 rounded-xl border border-red-100 flex items-center gap-2"
+                    >
+                      <X className="w-4 h-4" />
+                      {downloadError}
+                    </motion.p>
+                  )}
+
+                  <button 
+                    type="submit" 
+                    disabled={isDownloading}
+                    className="w-full py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-amber-600 transition-all shadow-xl shadow-slate-900/10 active:scale-[0.98] mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                  >
+                    {isDownloading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Validating...
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+                        Download Now
+                      </>
+                    )}
+                  </button>
+                </form>
+
+                <div className="mt-8 p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                  <p className="text-xs text-amber-700 leading-relaxed text-center">
+                    This software is protected. By downloading, you agree to our 
+                    <button onClick={() => { onClose(); setShowTerms(true); }} className="font-bold underline ml-1">Terms of Service</button>.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    )
+  }
 
   const Modal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
@@ -283,6 +426,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#fafbfc] text-slate-900 selection:bg-amber-100 selection:text-amber-900">
       <Modal isOpen={open} onClose={() => setOpen(false)} />
       <TermsModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
+      <DownloadModal isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} />
 
       {/* NAVBAR */}
       <header 
@@ -313,6 +457,7 @@ export default function Home() {
             {[
               { id: "features", label: "Features" },
               { id: "solutions", label: "Solutions" },
+              { id: "downloads", label: "Downloads" },
               { id: "advanced", label: "Enterprise" },
               { id: "contact", label: "Contact" },
             ].map((item) => (
@@ -363,6 +508,7 @@ export default function Home() {
                 {[
                   { id: "features", label: "Features" },
                   { id: "solutions", label: "Solutions" },
+                  { id: "downloads", label: "Downloads" },
                   { id: "advanced", label: "Enterprise" },
                   { id: "contact", label: "Contact" },
                 ].map((item) => (
@@ -679,6 +825,100 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* DOWNLOADS SECTION */}
+      <section id="downloads" className="py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 h-64 bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="bg-white rounded-[3rem] p-12 md:p-20 border border-slate-100 shadow-2xl shadow-slate-200/50 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-amber-500 via-amber-600 to-amber-700" />
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mb-6">
+                <Download className="w-4 h-4" />
+                Latest Version: v1.0.4
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6">
+                Download the <br />
+                <span className="text-amber-600">DineByte Desktop App</span>
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                Get the full power of DineByte on your desktop. Our secure software 
+                provides a stable, lightning-fast experience for your restaurant management, 
+                even with multiple terminals and offline support.
+              </p>
+
+              <div className="space-y-6 mb-12">
+                {[
+                  "Native Windows & macOS support",
+                  "Automatic background updates",
+                  "Advanced printer driver integration",
+                  "Secure local data encryption"
+                ].map((feature, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={() => setIsDownloadOpen(true)}
+                className="group px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-amber-600 transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-slate-900/20 flex items-center gap-3"
+              >
+                <Download className="w-6 h-6 group-hover:translate-y-1 transition-transform" />
+                Download Software
+              </button>
+              
+              <p className="mt-6 text-sm text-slate-400 font-medium flex items-center gap-2">
+                <Lock className="w-4 h-4" />
+                Password required for access
+              </p>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-10 bg-blue-500/5 rounded-full blur-[120px] opacity-50" />
+              <div className="relative z-10">
+                <div className="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
+                  <div className="bg-white rounded-[1.5rem] overflow-hidden shadow-lg border border-slate-100">
+                    <div className="bg-slate-900 p-3 flex items-center gap-2">
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                      </div>
+                      <div className="mx-auto text-[10px] text-slate-400 font-bold uppercase tracking-widest">DineByte Desktop</div>
+                    </div>
+                    <img 
+                      src="/dashboard.png" 
+                      alt="DineByte Desktop App" 
+                      className="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Floating stats */}
+              <motion.div 
+                animate={{ x: [0, 10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 z-20 hidden sm:block"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600">
+                    <Smartphone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase">File Size</p>
+                    <p className="text-xl font-bold text-slate-900">124 MB</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
