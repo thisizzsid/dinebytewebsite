@@ -102,7 +102,7 @@ export default function Home() {
     return (
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -199,7 +199,7 @@ export default function Home() {
   const Modal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -318,7 +318,7 @@ export default function Home() {
   const TermsModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -410,7 +410,7 @@ export default function Home() {
   const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -482,7 +482,7 @@ export default function Home() {
   const RefundModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -554,7 +554,7 @@ export default function Home() {
   const CookieModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -722,7 +722,7 @@ export default function Home() {
           </div>
 
           <div className="relative max-w-5xl mx-auto">
-            <div className="relative h-[500px] md:h-[700px] flex items-center justify-center perspective-3000">
+            <div className="relative h-125 md:h-175 flex items-center justify-center perspective-3000">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
@@ -740,7 +740,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-white/90 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-2xl z-30 flex flex-col md:flex-row items-center gap-6"
+                      className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-white/90 backdrop-blur-xl p-6 md:p-8 rounded-4xl border border-slate-200 shadow-2xl z-30 flex flex-col md:flex-row items-center gap-6"
                     >
                       <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30">
                         {(() => {
@@ -930,24 +930,27 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-100 text-amber-700 text-sm font-semibold mb-8">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            <div className="flex justify-center mb-8">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-100 text-amber-700 text-sm font-semibold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                Empowering Local Businesses — Better than the Industry Giants
               </span>
-              The Future of Dining is Here — Free Demo Available
-            </span>
+            </div>
 
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-8">
-              Elevate Your <br />
+              Premium Tech for <br />
               <span className="bg-linear-to-r from-amber-600 via-amber-500 to-amber-400 bg-clip-text text-transparent">
-                Restaurant Experience
+                Every Neighborhood Cafe
               </span>
             </h1>
 
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-12">
-              Transform your business with our all-in-one ecosystem. 
-              Smart QR ordering, seamless billing, and subscription-based management.
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-12">
+              DineByte delivers world-class restaurant management at a fraction of the cost. 
+              Built with love in India, we provide small businesses with the elite tools 
+              usually reserved for big names—budget-friendly, powerful, and local.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -1058,22 +1061,22 @@ export default function Home() {
             <div className="space-y-4">
               {[
                 { 
+                  icon: Users, 
+                  title: "Small Business First", 
+                  desc: "Built specifically for local cafes and restaurants. We offer high-end features at a budget-friendly price point.",
+                  img: "/order mockup.jpg"
+                },
+                { 
                   icon: LayoutDashboard, 
                   title: "Smart Table Management", 
                   desc: "Visualize your entire floor in real-time. Track order status, occupancy, and turnover at a glance.",
-                  img: "/order mockup.jpg"
+                  img: "/tablenew.jpg"
                 },
                 { 
                   icon: QrCode, 
                   title: "QR Ordering Experience", 
                   desc: "Give your guests the power to order and pay from their phones. No apps, no friction, just pure speed.",
                   img: "/qr.png"
-                },
-                { 
-                  icon: Receipt, 
-                  title: "Billing & Analytics", 
-                  desc: "Advanced GST-ready billing with deep revenue insights. Understand your best sellers and peak hours instantly.",
-                  img: "/bill mockup.jpg"
                 },
               ].map((item, index) => (
                 <motion.div 
@@ -1082,7 +1085,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group flex gap-6 p-8 rounded-[2rem] hover:bg-white hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 border border-transparent hover:border-slate-100"
+                  className="group flex gap-6 p-8 rounded-4xl hover:bg-white hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 border border-transparent hover:border-slate-100"
                 >
                   <div className="shrink-0 w-16 h-16 bg-slate-50 rounded-[1.25rem] flex items-center justify-center text-slate-400 group-hover:bg-amber-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-amber-600/30 transition-all duration-500 group-hover:rotate-6">
                     <item.icon className="w-8 h-8" />
@@ -1268,8 +1271,8 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -inset-10 bg-blue-500/5 rounded-full blur-[120px] opacity-50" />
               <div className="relative z-10">
-                <div className="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
-                  <div className="bg-white rounded-[1.5rem] overflow-hidden shadow-lg border border-slate-100">
+                <div className="bg-slate-50 rounded-4xl p-4 border border-slate-100">
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100">
                     <div className="bg-slate-900 p-3 flex items-center gap-2">
                       <div className="flex gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
@@ -1448,17 +1451,23 @@ export default function Home() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="text-3xl font-bold text-slate-900 tracking-tight">DineByte</span>
+                <div className="flex flex-col">
+                  <span className="text-3xl font-bold text-slate-900 tracking-tight">DineByte</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div className="w-5 h-3 bg-linear-to-b from-[#FF9933] via-white to-[#138808] rounded-xs border border-slate-200" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Make in India</span>
+                  </div>
+                </div>
               </div>
               <p className="text-slate-500 text-lg leading-relaxed max-w-md mb-8">
-                Revolutionizing the restaurant industry with smart, subscription-based management solutions. 
-                Proudly based in <strong>Bihar, India</strong>.
+                The most budget-friendly, high-performance restaurant management system for small businesses. 
+                Proudly empowering Indian neighborhood cafes to compete with global giants.
               </p>
               <div className="flex items-center gap-4">
-                <a href="#" className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-amber-600 hover:text-white transition-all">
+                <a href="#" aria-label="WhatsApp Support" className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-amber-600 hover:text-white transition-all">
                   <MessageCircle className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-amber-600 hover:text-white transition-all">
+                <a href="#" aria-label="Email Support" className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-amber-600 hover:text-white transition-all">
                   <Mail className="w-5 h-5" />
                 </a>
                 <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-xl text-slate-500 text-sm font-bold border border-slate-100">
